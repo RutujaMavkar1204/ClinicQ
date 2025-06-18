@@ -1,6 +1,6 @@
 import asyncHandler from '../utils/asyncHandler.js'
 import ApiError from '../utils/ApiError.js'
-import ApiResponse from '../utils/ApiResponse.js'
+import {ApiResponse} from '../utils/ApiResponse.js'
 import {User} from '../models/user.model.js' 
 import {uploadOnCloudinary} from '../utils/cloudinary.js'
 
@@ -29,17 +29,17 @@ if([username, fullName, email, password, role].some((field)=>{
 {throw new ApiError(401,'All fields are compulsary')}
 
 const existedUser=await User.findOne({
-    $or:['username', 'email']
+    $or:[{username},{email}]
 })
 
 if(existedUser){
     throw new ApiError(401,'user already exists')
 }
 
-const photoLocalPath=req.file?.photo?.path
+const photoLocalPath=req.files?.photo[0]?.path
 
 if(!photoLocalPath){
-    throw new ApiError(401,'please upload photo')
+    throw new ApiError(403,'please upload photo')
 }
 
 const photo=await uploadOnCloudinary(photoLocalPath)
@@ -50,7 +50,7 @@ if(!photo){
 
 const user=await User.create({
     username,
-    fullname,
+    fullName,
     email,
     password,
     role,
@@ -62,8 +62,8 @@ const createdUser=await User.findById(user._id).select("-refreshToken -password"
 if(!createdUser){
     throw new ApiError(400,'Something went wrong')
 }
-
-res.status(201).json(new ApiResponse(200,createdUser,'User created Successfully'))
+ console.log(200, createdUser, "user register succesfully" )
+return res.status(201).json(new ApiResponse(200,createdUser,'User created Successfully'))
 
 })
 

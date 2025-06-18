@@ -17,6 +17,6 @@ connectDB()
     console.log("Error in database connection", error)
 })
 
-import router from './routes/user.routes.js'
+import userRouter from './routes/user.routes.js'
 
-app.use('api/v1/users',router)
+app.use('/api/v1/users',userRouter)

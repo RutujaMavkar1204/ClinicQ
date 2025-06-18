@@ -26,16 +26,15 @@ const userSchema=new mongoose.Schema({
    },
    phoneNumber:{
     type:Number,
-    required:true,
    },
    gender:{
     type:String,
     enum:['male','female','other'],
-    required:function(){this.role===Patient}
+    required:function(){this.role==='Patient'}
    },
    age:{
     type:Number,
-    required:function(){this.role===Patient}
+    required:function(){this.role==='Patient'}
    },
    password:{
     type:String,
@@ -44,7 +43,7 @@ const userSchema=new mongoose.Schema({
    case:{
     type:String,
     enum:['Emergency','Normal'],
-    required:function(){this.role===Patient}
+    required:function(){this.role==='Patient'}
    },
    photo:{
     type:String,
@@ -52,20 +51,19 @@ const userSchema=new mongoose.Schema({
    },
    clinicName:{
     type:String,
-    required:function(){this.role===Doctor}
+    required:function(){this.role==='Doctor'}
    },
    specialization:{
     type:String,
-    required:function(){this.role===Doctor}
+    required:function(){this.role==='Doctor'}
    },
    refreshToken:{
      type:String,
-    required:true
    }
 
 },{timeStamps:true})
 
-userSchema.pre('save',async function(){
+userSchema.pre('save',async function(next){
     if(!this.isModified('password')){next()}
     this.password=await bcrypt.hash(this.password,10)
     next()
