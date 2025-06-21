@@ -1,12 +1,16 @@
 import {Router} from 'express'
-import {Registration} from '../controller/user.controller.js'
+import {Registration, Login, Logout} from '../controller/user.controller.js'
 import {upload} from '../middlewares/multer.middleware.js'
+import {verifyJWT} from '../middlewares/auth.middleware.js'
 
 const router=Router()
 
 router.route('/register').post(upload.fields([{
     name:'photo',
-    maxSize:1
+    maxCount:1
 }]),Registration)
+
+router.route('/login').post(Login)
+router.route('/logout').post(verifyJWT,Logout)
 
 export default router;
