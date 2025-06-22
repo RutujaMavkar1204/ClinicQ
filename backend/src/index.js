@@ -18,5 +18,8 @@ connectDB()
 })
 
 import userRouter from './routes/user.routes.js'
-
 app.use('/api/v1/users',userRouter)
+
+import queueRouter from './routes/queue.routes.js'
+app.use('/api/v1/queues', queueRouter)
+
