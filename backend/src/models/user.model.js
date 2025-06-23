@@ -27,35 +27,13 @@ const userSchema=new mongoose.Schema({
    phoneNumber:{
     type:Number,
    },
-   gender:{
-    type:String,
-    enum:['male','female','other'],
-    required:function(){this.role==='Patient'}
-   },
-   age:{
-    type:Number,
-    required:function(){this.role==='Patient'}
-   },
    password:{
     type:String,
     required:[true,'Password is Required'],
    },
-   case:{
-    type:String,
-    enum:['Emergency','Normal'],
-    required:function(){this.role==='Patient'}
-   },
    photo:{
     type:String,
     required:true
-   },
-   clinicName:{
-    type:String,
-    required:function(){this.role==='Doctor'}
-   },
-   specialization:{
-    type:String,
-    required:function(){this.role==='Doctor'}
    },
    refreshToken:{
      type:String,
