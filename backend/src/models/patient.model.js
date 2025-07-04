@@ -5,17 +5,6 @@ const patientSchema= new mongoose.Schema({
       type:mongoose.Schema.Types.ObjectId,
       ref:'User'
    },
-   gender:{
-    type:String,
-    enum:['male','female','other'],
-   },
-   age:{
-    type:Number,
-   },
-   case:{
-    type:String,
-    enum:['Emergency','Normal'],
-   },
    phoneNumber:{
     type:Number,
    },
@@ -27,9 +16,6 @@ const patientSchema= new mongoose.Schema({
    IdentityVerification:{
       govtDoc:{
          type:String,
-         unique: true,
-         sparse: true ,
-         default:null
       },
       address:{
          type:String,

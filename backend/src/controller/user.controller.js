@@ -24,88 +24,54 @@ const generateAccessAndRefreshToken= async (userId)=>{
 }
 
 const Registration=asyncHandler(async(req,res)=>{
-/*
-gather info
-validation if everything came
-check if user exist 
-take phto url 
-upload photo
-write code for cloudinary
-create user
-check
-remove password refreshtoken
-send res
-export
-write routes and multer
+const { fullName, email, password, role,phoneNumber  }=req.body
+const {latitude, longitude}=req.headers
+const location={
+    coordinates:[latitude,longitude]
+}
 
- */
-
-const {username, fullName, email, password, role }=req.body
-
-if([username, fullName, email, password, role].some((field)=>{
-    field?.trim==""
-}))
-{throw new ApiError(401,'All fields are compulsary')}
-
-const existedUser=await User.findOne({
-    $or:[{username},{email}]
-})
-
-if(existedUser){
-    throw new ApiError(401,'user already exists')
+if ([ fullName, email, password, role, phoneNumber ].some((field) => !field || field.trim() === "")) {
+  throw new ApiError(400, 'All fields are compulsory');
 }
 
 const photoLocalPath=req.files?.photo[0]?.path
-
 if(!photoLocalPath){
     throw new ApiError(403,'please upload photo')
 }
 
-const photo=await uploadOnCloudinary(photoLocalPath)
-
+const photo = await uploadOnCloudinary(photoLocalPath);
 if(!photo){
     throw new ApiError(401,'error in photo uploading')
 }
 
 const user=await User.create({
-    username,
     fullName,
     email,
     password,
     role,
+    phoneNumber,
     photo:photo.url,  
+   location:location
 })
-
 const createdUser=await User.findById(user._id).select("-refreshToken -password")
-                                                   
+
+console.timeEnd("userCreate");
 if(!createdUser){
     throw new ApiError(400,'Something went wrong')
 }
- console.log(200, createdUser, "user register succesfully" )
+
 return res.status(201).json(new ApiResponse(200,createdUser,'User created Successfully'))
 
 })
+
 const Login =asyncHandler(async (req, res)=>{
-    /*
-    take username, email, password
-    check validation
-    check if user a;ready present
-    compare the password
-    check
-    generate acess and refreshtoken
-    send cookies
+    const {email, password}=req.body
 
-    */
-
-    const {email, username, password}=req.body
-
-    if(!(email || username)){
+    if(!(email || password)){
         throw new ApiError(400,'username or password is required')
     }
 
-    const user=await User.findOne({
-        $or:[{email}, {username}]
-    })
+    const user=await User.findOne({email})
     if(!user){
         throw new ApiError(400, 'user does not exist')
     }
@@ -121,7 +87,8 @@ const Login =asyncHandler(async (req, res)=>{
     const loggedInUser= await User.findOne(user._id).select('-refreshToken  -password')
     const options={
         httpOnly:true,
-        secure:true
+        secure:true,
+        maxAge:24 * 60 * 60 * 1000 
         
     }
     res.status(200)

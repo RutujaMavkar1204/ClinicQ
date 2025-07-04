@@ -13,7 +13,8 @@ const uploadOnCloudinary=async(localPath)=>{
         return null
     }
     const response=await cloudinary.uploader.upload(localPath,{
-        resource_type:"auto"
+        resource_type:"auto",
+        quality: 'auto'
     })
     if(!response){
         console.log('error in cloudinary uplodation')

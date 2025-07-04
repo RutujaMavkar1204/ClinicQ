@@ -1,33 +1,30 @@
-import { useState } from 'react'
-import reactLogo from './assets/react.svg'
-import viteLogo from '/vite.svg'
-import './App.css'
+import react from 'react'
+import {BrowserRouter, Routes, Route} from 'react-router-dom'
+import Homepage from './components/Homepage.jsx'
+import Registration from './components/Registration.jsx'
+import Login from './components/Login.jsx'
+import PatientHomepage from './components/Patient.Homepage.jsx'
+import DoctorHomepage from './components/Doctor.Homepage.jsx'
+import MoreDetail from './components/MoreDetail.jsx'
+import ProtectedRoute from './utils/ProtectedRoute.jsx'
+import AuthDirectRoute from './utils/AuthDirectRoute.jsx'
 
 function App() {
-  const [count, setCount] = useState(0)
+
 
   return (
     <>
-      <div>
-        <a href="https://vite.dev" target="_blank">
-          <img src={viteLogo} className="logo" alt="Vite logo" />
-        </a>
-        <a href="https://react.dev" target="_blank">
-          <img src={reactLogo} className="logo react" alt="React logo" />
-        </a>
-      </div>
-      <h1>Vite + React</h1>
-      <div className="card">
-        <button onClick={() => setCount((count) => count + 1)}>
-          count is {count}
-        </button>
-        <p>
-          Edit <code>src/App.jsx</code> and save to test HMR
-        </p>
-      </div>
-      <p className="read-the-docs">
-        Click on the Vite and React logos to learn more
-      </p>
+  <BrowserRouter>
+    <Routes>
+      <Route path='/' element={<AuthDirectRoute/>}/>
+      <Route path='/homepage' element={<Homepage/>}/>
+      <Route path='/register' element={<Registration/>}/>
+      <Route path='/login' element={<Login/>}/>
+      <Route path='/patientList' element={<ProtectedRoute allowedRole='Patient'> <PatientHomepage/></ProtectedRoute>}/>
+      <Route path='/doctor/:id' element={<ProtectedRoute allowedRole='Patient'> <MoreDetail/></ProtectedRoute>}/>
+      <Route path='/queuesList' element={<ProtectedRoute allowedRole='Doctor'> <DoctorHomepage/></ProtectedRoute>}/>
+    </Routes>
+  </BrowserRouter>
     </>
   )
 }

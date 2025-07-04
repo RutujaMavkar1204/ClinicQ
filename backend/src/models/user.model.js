@@ -3,13 +3,6 @@ import jwt from 'jsonwebtoken'
 import bcrypt from 'bcrypt'
 
 const userSchema=new mongoose.Schema({
-   username:{
-    type:String,
-    unique:true,
-    required:true,
-    trim:true,
-    lowercase:true
-   },
    fullName:{
     type:String,
     required:true,
@@ -24,9 +17,6 @@ const userSchema=new mongoose.Schema({
     enum:['Doctor', 'Patient'],
     required:true,
    },
-   phoneNumber:{
-    type:Number,
-   },
    password:{
     type:String,
     required:[true,'Password is Required'],
@@ -37,9 +27,21 @@ const userSchema=new mongoose.Schema({
    },
    refreshToken:{
      type:String,
-   }
+   },
+   phoneNumber:{
+    type:Number
+   },
+   location:{
+        type:{
+            type:String,
+            enum:['point']
+        },
+        coordinates:{
+            type:[Number]
+        }
+    },
 
-},{timeStamps:true})
+},{timestamps:true})
 
 userSchema.pre('save',async function(next){
     if(!this.isModified('password')){next()}
