@@ -10,7 +10,7 @@ const Navbar=()=>{
      const navigate=useNavigate()
     const Logout=async()=>{
         try{
-            const res=await axios.post('http://localhost:4000/api/v1/users/logout',{},{ withCredentials: true })
+            const res=await axios.post('https://clinicq-backend.onrender.com/api/v1/users/logout',{},{ withCredentials: true })
             localStorage.clear();
             navigate('/login')
             console.log(res)

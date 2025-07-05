@@ -44,7 +44,7 @@ const submit=async(e)=>{
         data.append(key,formdata[key])
     }
     try{
-        const res=await axios.post('http://localhost:4000/api/v1/users/register',data,{
+        const res=await axios.post('https://clinicq-backend.onrender.com/api/v1/users/register',data,{
             headers:{
                 'Content-Type':'multipart/form-data',
                 'latitude': latitude,

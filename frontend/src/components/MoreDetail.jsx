@@ -18,7 +18,7 @@ const MoreDetail=()=>{
 const getAppointment=async()=>{  
        let data = { date, appointment, _id };
         console.log("slot",appointment)
-        const res= await axios.post('http://localhost:4000/api/v1/queues/appointment',data, {withCredentials:true})
+        const res= await axios.post('https://clinicq-backend.onrender.com/api/v1/queues/appointment',data, {withCredentials:true})
         console.log(res)
             Swal.fire({
                 title: 'Appointment is made successfully',
@@ -35,7 +35,7 @@ const getAppointment=async()=>{
     
 useEffect(()=>{
     const getSlot=async()=>{
-        const res= await axios.post('http://localhost:4000/api/v1/queues/makeAppointmentList',_id, {withCredentials:true})
+        const res= await axios.post('https://clinicq-backend.onrender.com/api/v1/queues/makeAppointmentList',_id, {withCredentials:true})
         console.log(res)
         let onlyDate=date
         onlyDate=parseInt(onlyDate.split('-')[2])
@@ -59,7 +59,7 @@ useEffect(()=>{
     const getDoctorDetail=async()=>{
     console.log("id is this",_id)
     try{
-        const res=await axios.post('http://localhost:4000/api/v1/queues/doctorDetail', _id, {withCredentials:true})
+        const res=await axios.post('https://clinicq-backend.onrender.com/api/v1/queues/doctorDetail', _id, {withCredentials:true})
         setDoc(res.data.data) 
     }
     catch(error){

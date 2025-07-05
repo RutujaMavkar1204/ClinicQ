@@ -22,7 +22,7 @@ const PatientHomepage=()=>{
 
     const getPatientInQueue=async()=>{
         setShowPhoneNumber(true)
-        const res=await axios.post('http://localhost:4000/api/v1/queues/patientDetail',{phoneNumber},{withCredentials:true})
+        const res=await axios.post('https://clinicq-backend.onrender.com/api/v1/queues/patientDetail',{phoneNumber},{withCredentials:true})
         console.log(res)
         setPhoneNumber('')
     }
@@ -30,7 +30,7 @@ const PatientHomepage=()=>{
     useEffect(()=>{
         const fetchQueue=async()=>{
              try{
-            const res= await axios.post('http://localhost:4000/api/v1/queues/doctorsList',{},{withCredentials:true})
+            const res= await axios.post('https://clinicq-backend.onrender.com/api/v1/queues/doctorsList',{},{withCredentials:true})
             setArrayOfQueue(res.data.data)
              
         }
@@ -43,7 +43,7 @@ const PatientHomepage=()=>{
        
     const Logout=async()=>{
         try{
-            const res = await axios.post('http://localhost:4000/api/v1/users/logout',{},{ withCredentials: true })
+            const res = await axios.post('https://clinicq-backend.onrender.com/api/v1/users/logout',{},{ withCredentials: true })
             localStorage.clear();
             navigate('/login')
             console.log(res)

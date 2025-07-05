@@ -24,7 +24,6 @@ const DoctorHomepage = () => {
     workingDays: ''
   });
 
-  // Generate dates for select dropdown
   useEffect(() => {
     const arrOfDates = [];
     for (let i = 0; i <= 7; i++) {
@@ -36,11 +35,10 @@ const DoctorHomepage = () => {
     setDates(arrOfDates);
   }, []);
 
-  // Fetch clinic info and initial queue
   useEffect(() => {
     const getClinic = async () => {
       try {
-        const res = await axios.post('http://localhost:4000/api/v1/queues/existedClinic', {}, { withCredentials: true });
+        const res = await axios.post('https://clinicq-backend.onrender.com/api/v1/queues/existedClinic', {}, { withCredentials: true });
         setIsClinicPresent(res.data.data);
 
         if (!date) {
@@ -54,10 +52,9 @@ const DoctorHomepage = () => {
     getClinic();
   }, []);
 
-  // Fetch full queue
   const fetchQueue = async () => {
     try {
-      const res = await axios.post('http://localhost:4000/api/v1/queues/getAllAppointments', { _id: user._id }, { withCredentials: true });
+      const res = await axios.post('https://clinicq-backend.onrender.com/api/v1/queues/getAllAppointments', { _id: user._id }, { withCredentials: true });
       setArrayOfQueue(res.data.data);
       console.log("Fetched full queue:", res.data.data);
     } catch (err) {
@@ -65,13 +62,12 @@ const DoctorHomepage = () => {
     }
   };
 
-  // Fetch particular date appointment only if date is selected
   useEffect(() => {
     if (!date) return;
 
     const fetchParticularDate = async () => {
       try {
-        const res = await axios.post('http://localhost:4000/api/v1/queues/particularDateAppointment', { date }, { withCredentials: true });
+        const res = await axios.post('https://clinicq-backend.onrender.com/api/v1/queues/particularDateAppointment', { date }, { withCredentials: true });
         setArrayOfQueue(res.data.data);
         console.log("Fetched particular date queue:", res.data.data);
       } catch (err) {
@@ -82,14 +78,13 @@ const DoctorHomepage = () => {
     fetchParticularDate();
   }, [date]);
 
-  // Show form if no clinic present
   useEffect(() => {
     setShowForm(!isClinicPresent);
   }, [isClinicPresent]);
 
   const TodaysAppointment = async () => {
     try {
-      const res = await axios.post('http://localhost:4000/api/v1/queues/getTodaysAppointment', {}, { withCredentials: true });
+      const res = await axios.post('https://clinicq-backend.onrender.com/api/v1/queues/getTodaysAppointment', {}, { withCredentials: true });
       setArrayOfQueue(res.data.data);
       console.log("Today's appointments:", res.data.data);
     } catch (err) {
@@ -120,7 +115,7 @@ const DoctorHomepage = () => {
     }
 
     try {
-      const res = await axios.post('http://localhost:4000/api/v1/queues/queueCreatedByDoctor', formdata, { withCredentials: true });
+      const res = await axios.post('https://clinicq-backend.onrender.com/api/v1/queues/queueCreatedByDoctor', formdata, { withCredentials: true });
       console.log("Queue creation response:", res.data);
 
       Swal.fire({

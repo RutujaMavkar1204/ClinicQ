@@ -24,7 +24,7 @@ const Login=()=>{
         }
            body.email=formdata.email
       
-            const res=await axios.post('http://localhost:4000/api/v1/users/login',body,{
+            const res=await axios.post('https://clinicq-backend.onrender.com/api/v1/users/login',body,{
                 withCredentials: true
             })
             console.log(res)
