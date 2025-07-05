@@ -6,7 +6,7 @@ import Login from './components/Login.jsx'
 import PatientHomepage from './components/Patient.Homepage.jsx'
 import DoctorHomepage from './components/Doctor.Homepage.jsx'
 import MoreDetail from './components/MoreDetail.jsx'
-import ProtectedRoute from './utils/ProtectedRoute.jsx'
+import ProtectedRoute from './utils/protectedRoute.jsx'
 import AuthDirectRoute from './utils/AuthDirectRoute.jsx'
 
 function App() {
