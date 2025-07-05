@@ -26,6 +26,9 @@ const verifyJWT=asyncHandler(async(req, res, next)=>{
      next()
     }
     catch(error){
+        const token = req.cookies?.accessToken || req.header('Authorization')?.replace('Bearer ', '');
+
+    console.log(token)
         console.log('error in authentication', error)
         throw new ApiError(400,"error in authentication")
     }

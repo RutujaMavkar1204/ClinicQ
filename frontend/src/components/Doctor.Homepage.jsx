@@ -24,6 +24,7 @@ const DoctorHomepage = () => {
     workingDays: ''
   });
 
+  // Generate dates for select dropdown
   useEffect(() => {
     const arrOfDates = [];
     for (let i = 0; i <= 7; i++) {
@@ -35,6 +36,7 @@ const DoctorHomepage = () => {
     setDates(arrOfDates);
   }, []);
 
+  // Fetch clinic info and initial queue
   useEffect(() => {
     const getClinic = async () => {
       try {
@@ -52,6 +54,7 @@ const DoctorHomepage = () => {
     getClinic();
   }, []);
 
+  // Fetch full queue
   const fetchQueue = async () => {
     try {
       const res = await axios.post('https://clinicq-backend.onrender.com/api/v1/queues/getAllAppointments', { _id: user._id }, { withCredentials: true });
@@ -62,6 +65,7 @@ const DoctorHomepage = () => {
     }
   };
 
+  // Fetch particular date appointment only if date is selected
   useEffect(() => {
     if (!date) return;
 
@@ -78,6 +82,7 @@ const DoctorHomepage = () => {
     fetchParticularDate();
   }, [date]);
 
+  // Show form if no clinic present
   useEffect(() => {
     setShowForm(!isClinicPresent);
   }, [isClinicPresent]);
@@ -115,7 +120,7 @@ const DoctorHomepage = () => {
     }
 
     try {
-      const res = await axios.post('https://clinicq-backend.onrender.com/api/v1/queues/queueCreatedByDoctor', formdata, { withCredentials: true });
+      const res = await axios.post('https://clinicq-backend.onrender.com/api/v1/queues/queueCreatedByDoctor', {formdata}, { withCredentials: true });
       console.log("Queue creation response:", res.data);
 
       Swal.fire({

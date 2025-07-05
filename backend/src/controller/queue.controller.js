@@ -218,7 +218,7 @@ res.status(200).json(new ApiResponse(200, {delArr,patient}, 'slot deleted'))
 })
 
 const getAllAppointments=asyncHandler(async(req,res)=>{
-const _id=req.user._id
+const _id=req.body
 
 
 const doc=await Doctor.findOne({user:_id})
@@ -258,7 +258,7 @@ const list=await PatientQueue.find({doctor:id, date:date })
 
 const existedClinic=asyncHandler(async(req,res)=>{
    
-  const _id=req.user._id
+  const {_id}=req.body
   let isClinicPresent=false
     const existedClinic=await Doctor.findOne({user:_id})
     if(!existedClinic){
