@@ -55,6 +55,7 @@ const PatientHomepage=()=>{
 
     function calculateDistance(lat1, lon1, lat2, lon2) {
     const toRad = (value) => (value * Math.PI) / 180;
+     console.log('LAT1:', lat1, 'LON1:', lon1, 'LAT2:', lat2, 'LON2:', lon2);
 
     const R = 6371; 
     const dLat = toRad(lat2 - lat1);
@@ -77,15 +78,12 @@ const PatientHomepage=()=>{
     return(
         <>
         <div className='bg-sky-200 min-h-screen'>
-        <div className='flex flex-row items-center bg-sky-200  border-1  border-gray-400'>
-                    <div className='flex  items-center inset-y-0 left-0'>
+        <div className='flex flex-row justify-between items-center bg-sky-200  border-1  border-gray-400'>
+                    <div className='flex  items-center '>
                         <FontAwesomeIcon icon={faLaptopMedical}className="text-darkblue ml-3 text-3xl hover:text-sky-950 transition duration-300"/>
                         <h1 className=' font-serif text-darkblue text-3xl font-bold'>ClinicQ</h1>
                     </div>
-                    <div className='flex  items-center justify-center inset-y-0 m-auto ' >
-                        <input type='text' name='search' placeholder='Search the name of Doctor or Clinic here...' class='min-w-md py-1 flex px-2 rounded-md bg-gray-200 border-gray-400'/>
-                    </div>
-                    <div className=' flex  items-center inset-y-0 right-0'>
+                    <div className=' flex  items-center '>
                          <button className='rounded-sm mx-2 bg-red-900 text-white text-base border-2 h-9  px-4' onClick={Logout}>Logout</button>
                          <img src={user.photo} className=' w-10 h-10 my-1 mx-2 rounded-full ' ></img>
                     </div>        
@@ -99,10 +97,10 @@ const PatientHomepage=()=>{
             arrayOfQueue.map((items) => {
                 const distance = items.userInfo?.location?.coordinates
                 ? calculateDistance(
-                    user.location.coordinates[0],
-                    user.location.coordinates[1],
-                    items.userInfo.location.coordinates[0],
-                    items.userInfo.location.coordinates[1]
+                    user.location.coordinates[0].toFixed(3),
+                    user.location.coordinates[1].toFixed(3),
+                    items.userInfo.location.coordinates[0].toFixed(3),
+                    items.userInfo.location.coordinates[1].toFixed(3)
                     )
                 : 'Unknown';
 
@@ -113,7 +111,7 @@ const PatientHomepage=()=>{
                         Dr. {items.userInfo?.fullName}, {items.degree?.toUpperCase()} ({items.specialization})
                     </h1>
                     <h1>Experience: {items.experience}+ years of experience</h1>
-                    <h1>Distance: {distance}</h1>
+                    <h1>Distance: {distance.toFixed(2)} km away</h1>
                     </div>
 
                     <div className="flex mt-2 flex-row justify-center">

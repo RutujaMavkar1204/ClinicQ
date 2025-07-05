@@ -34,6 +34,7 @@ if ([ fullName, email, password, role, phoneNumber ].some((field) => !field || f
   throw new ApiError(400, 'All fields are compulsory');
 }
 
+console.log(req.files)
 const photoLocalPath=req.files?.photo[0]?.path
 if(!photoLocalPath){
     throw new ApiError(403,'please upload photo')
