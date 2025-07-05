@@ -5,7 +5,7 @@ import cors from 'cors'
 const app=express()
 app.use(cookieParser())
 app.use(cors({
-    origin:'https://clinicq-frontend.onrender.com',
+    origin:process.env.CORS_PATH,
     credentials:true
 }))
 app.use(express.json({limit:'16kb'}))
