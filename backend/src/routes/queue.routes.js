@@ -7,7 +7,7 @@ const queueRouter=Router()
 
 queueRouter.route('/doctorDetail').post(verifyJWT,doctorDetail)
 queueRouter.route('/queueCreatedByDoctor').post(verifyJWT,queueCreatedByDoctor)
-queueRouter.route('/doctorsList').post(verifyJWT,doctorsList)
+queueRouter.route('/doctorsList').post(doctorsList)
 queueRouter.route('/appointment').post(verifyJWT,appointment)
 queueRouter.route('/getAllAppointments').post(verifyJWT,getAllAppointments)
 queueRouter.route('/existedClinic').post(verifyJWT,existedClinic)
