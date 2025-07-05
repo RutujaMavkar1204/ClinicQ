@@ -24,8 +24,7 @@ import queueRouter from './routes/queue.routes.js'
 app.use('/api/v1/queues', queueRouter)
 
 app.use((err, req, res, next) => {
-  console.error(err.stack);  // Log detailed error for server logs
-
+  console.error(err.stack);  
   res.status(err.statusCode || 500).json({
     success: false,
     message: err.message || 'Internal Server Error'
